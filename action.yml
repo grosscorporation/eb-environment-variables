@@ -5,11 +5,14 @@ runs:
     using: 'node12'
     main: 'env.js'
 inputs:
-    aws_key:
+    aws_access_key:
         description: 'AWS Access Key'
         required: true
-    aws_secret:
+    aws_secret_key:
         description: 'AWS Secret Key'
+        required: true
+    slug:
+        description: 'Custom app slug for variants'
         required: true
     region:
         description: 'AWS Region'
