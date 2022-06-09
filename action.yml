@@ -1,0 +1,20 @@
+name: 'Gross Cloud Network EBS Production'
+description: 'Configure aws eb environment variables'
+author: 'Gross Corporation'
+runs:
+    using: 'node12'
+    main: 'env.js'
+inputs:
+    aws_key:
+        description: 'AWS Access Key'
+        required: true
+    aws_secret:
+        description: 'AWS Secret Key'
+        required: true
+    region:
+        description: 'AWS Region'
+        required: true
+
+branding:
+    icon: 'arrow-up'
+    color: 'green'
