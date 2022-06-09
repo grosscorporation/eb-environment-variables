@@ -11,7 +11,7 @@ try {
 
 const IS_GITHUB_ACTION = !!process.env.GITHUB_ACTIONS
 
-const appName = process.argv.splice(2)[0] || process.env.APP_SLUG
+const appName = process.argv.splice(2)[0] || process.env.INPUT_SLUG
 console.log('###############################################################')
 console.log('APP_SLUG ENV ~ ', appName)
 console.log('###############################################################')
