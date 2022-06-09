@@ -11,6 +11,9 @@ inputs:
     aws_secret_key:
         description: 'AWS Secret Key'
         required: true
+    environment:
+        description: 'Node environment variable'
+        required: true
     slug:
         description: 'Custom app slug for variants'
         required: true

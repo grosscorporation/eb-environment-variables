@@ -15,7 +15,12 @@ const appName = process.argv.splice(2)[0] || process.env.APP_SLUG
 console.log('###############################################################')
 console.log('APP_SLUG ENV ~ ', appName)
 console.log('###############################################################')
-const secretName = process.env.NODE_ENV === 'production' ? 'production/' + appName : 'development/' + appName
+
+const secretName = process.env.INPUT_ENVIRONMENT === 'production' ? 'production/' + appName : 'development/' + appName
+
+console.log('###############################################################')
+console.log('SECRET NAME ~ ', secretName)
+console.log('###############################################################')
 
 const client = new AWS.SecretsManager({
 	region: 'eu-west-1',
