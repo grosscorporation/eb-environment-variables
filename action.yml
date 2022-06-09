@@ -14,6 +14,9 @@ inputs:
     environment:
         description: 'Node environment variable'
         required: true
+    secret_name:
+        description: 'Secret name'
+        required: true
     slug:
         description: 'Custom app slug for variants'
         required: true

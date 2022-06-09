@@ -16,7 +16,7 @@ console.log('###############################################################')
 console.log('APP_SLUG ENV ~ ', appName)
 console.log('###############################################################')
 
-const secretName = process.env.INPUT_ENVIRONMENT === 'production' ? 'production/' + appName : 'development/' + appName
+const secretName = process.env.INPUT_SECRET_NAME
 
 console.log('###############################################################')
 console.log('SECRET NAME ~ ', secretName)
@@ -45,8 +45,7 @@ client.getSecretValue({ SecretId: secretName }, (err, data) => {
   aws:elasticbeanstalk:application:environment:
 ${ebFile}`
 
-			fs.writeFileSync('./_env.current', envFile)
-			if (process.env.NODE_ENV === 'production' && IS_GITHUB_ACTION) {
+			if (IS_GITHUB_ACTION) {
 				fs.writeFileSync('./.ebextensions/options.config', ebMap, function (err) {
 					if (err) {
 						throw err
