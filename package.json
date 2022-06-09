@@ -22,6 +22,9 @@
 	],
 	"author": "Einar Egilsson",
 	"license": "MIT",
+	"dependencies": {
+		"aws-sdk": "^2.1147.0"
+	},
 	"bugs": {
 		"url": "https://github.com/einaregilsson/beanstalk-deploy/issues"
 	},
