@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Author: Gross Corporation, https://github.com/grosscorporation/beanstalk-deploy
+// Author: Gross Corporation, https://github.com/grosscorporation/eb-environment-variables
 
 let AWS = require('aws-sdk')
 let fs = require('fs')
@@ -19,8 +19,8 @@ const secretName = process.env.NODE_ENV === 'production' ? 'production/' + appNa
 
 const client = new AWS.SecretsManager({
 	region: 'eu-west-1',
-	accessKeyId: process.env.aws_key || process.env.AWS_ACCESS_KEY_ID,
-	secretAccessKey: process.env.aws_secret || process.env.AWS_SECRET_ACCESS_KEY
+	accessKeyId: process.env.INPUT_AWS_ACCESS_KEY || process.env.AWS_ACCESS_KEY_ID,
+	secretAccessKey: process.env.INPUT_AWS_SECRET_KEY || process.env.AWS_SECRET_ACCESS_KEY
 })
 
 client.getSecretValue({ SecretId: secretName }, (err, data) => {
