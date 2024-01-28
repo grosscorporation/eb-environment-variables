@@ -22,11 +22,17 @@ console.log('###############################################################')
 console.log('SECRET NAME ~ ', secretName)
 console.log('###############################################################')
 
-const client = new AWS.SecretsManager({
-	region: 'eu-west-1',
+const awsConfig = {
+	region: process.env.INPUT_AWS_DEFAULT_REGION
+	  ?? process.env.INPUT_AWS_REGION
+	  ?? process.env.AWS_DEFAULT_REGION
+	  ?? process.env.AWS_REGION
+	  ?? 'eu-west-1',
 	accessKeyId: process.env.INPUT_AWS_ACCESS_KEY || process.env.AWS_ACCESS_KEY_ID,
 	secretAccessKey: process.env.INPUT_AWS_SECRET_KEY || process.env.AWS_SECRET_ACCESS_KEY
-})
+}
+  
+const client = new AWS.SecretsManager(awsConfig)
 
 client.getSecretValue({ SecretId: secretName }, (err, data) => {
 	if (err) {
