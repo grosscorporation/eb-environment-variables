@@ -12,7 +12,7 @@ try {
 const IS_GITHUB_ACTION = !!process.env.GITHUB_ACTIONS
 
 const appName = process.argv.splice(2)[0] || process.env.INPUT_SLUG
-const region = process.env.INPUT_AWS_DEFAULT_REGION || process.env.INPUT_AWS_REGION || process.env.AWS_DEFAULT_REGION || process.env.AWS_REGION || 'eu-west-1'
+const region = process.env.INPUT_REGION ?? process.env.INPUT_AWS_DEFAULT_REGION ?? process.env.INPUT_AWS_REGION ?? process.env.AWS_DEFAULT_REGION ?? process.env.AWS_REGION ?? 'eu-west-1'
 
 const secretName = process.env.INPUT_SECRET_NAME
 
