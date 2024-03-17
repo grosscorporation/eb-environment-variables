@@ -23,7 +23,7 @@
 	"author": "Einar Egilsson",
 	"license": "MIT",
 	"dependencies": {
-		"aws-sdk": "^2.1147.0"
+		"@aws-sdk/client-secrets-manager": "^3.535.0"		
 	},
 	"bugs": {
 		"url": "https://github.com/einaregilsson/beanstalk-deploy/issues"

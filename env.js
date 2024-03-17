@@ -1,7 +1,9 @@
-#!/usr/bin/env node
-// Author: Gross Corporation, https://github.com/grosscorporation/eb-environment-variables
+#!/usr/bin/env node// Author: Gross Corporation, https://github.com/grosscorporation/eb-environment-variables
 
-let AWS = require('aws-sdk')
+
+
+const { SecretsManager } = require('@aws-sdk/client-secrets-manager');
+
 let fs = require('fs')
 try {
 	if (process.env.NODE_ENV === 'development') {
@@ -33,8 +35,8 @@ const awsConfig = {
 	accessKeyId: process.env.INPUT_AWS_ACCESS_KEY || process.env.AWS_ACCESS_KEY_ID,
 	secretAccessKey: process.env.INPUT_AWS_SECRET_KEY || process.env.AWS_SECRET_ACCESS_KEY
 }
-  
-const client = new AWS.SecretsManager(awsConfig)
+
+const client = new SecretsManager(awsConfig)
 
 client.getSecretValue({ SecretId: secretName }, (err, data) => {
 	if (err) {
