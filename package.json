@@ -4,7 +4,7 @@
 	"description": "GitHub Action + command line tool to configure AWS Elastic Beanstalk Environment Variables.",
 	"main": "env.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node env.js"
 	},
 	"bin": {
 		"beanstalk-deploy": "./env.js"

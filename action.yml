@@ -23,6 +23,9 @@ inputs:
     region:
         description: 'AWS Region'
         required: true
+    release_tag:
+        description: 'Release tag'
+        required: false
 
 branding:
     icon: 'arrow-up'
