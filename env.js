@@ -16,7 +16,7 @@ try {
 const appName = process.argv.splice(2)[0] || process.env.INPUT_SLUG || process.env.SLUG
 const region = process.env.INPUT_REGION || process.env.AWS_REGION || 'us-east-1'
 
-const secretName = process.env.INPUT_SECRET_NAME || process.env.SECRET_NAME
+const secretName = process.env.INPUT_SECRET_NAME
 const releaseTag = process.env.INPUT_RELEASE_TAG || process.env.RELEASE_TAG || (new Date() * 1000).toString()
 
 console.log('###############################################################')
@@ -61,9 +61,10 @@ client.getSecretValue({ SecretId: secretName }, (err, data) => {
   aws:elasticbeanstalk:application:environment:
 ${ebFile}`
 
-			console.log(ebMap)
 
-			fs.writeFile('./.ebextensions/options.config', ebMap, function(err, data) {
+			const fp = `./.ebextensions/${appName ?? releaseTag }-options.config`
+
+			fs.writeFile(fp, ebMap, function(err, data) {
 				if(err) throw err
 				console.log(data)
 			})
