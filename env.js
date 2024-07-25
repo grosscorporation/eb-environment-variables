@@ -1,23 +1,23 @@
 #!/usr/bin/env node// Author: Gross Corporation, https://github.com/grosscorporation/eb-environment-variables
 
-
-
 const { SecretsManager } = require('@aws-sdk/client-secrets-manager');
+const fs = require('fs')
+const dotenv = require('dotenv')
 
-let fs = require('fs')
 try {
+	dotenv.config()
 	if (process.env.NODE_ENV === 'development') {
-		require('dotenv').config({ path: process.cwd() + '/.env' })
+		dotenv.config({ path: process.cwd() + '/.env', override: true })
 	}
-} catch (e) {}
+} catch (e) {
+	// @ts-ignore
+}
 
-const IS_GITHUB_ACTION = !!process.env.GITHUB_ACTIONS
+const appName = process.argv.splice(2)[0] ?? process.env.INPUT_SLUG ?? process.env.SLUG
+const region = process.env.INPUT_REGION ?? process.env.AWS_REGION ?? 'us-east-1'
 
-const appName = process.argv.splice(2)[0] || process.env.INPUT_SLUG
-const region = process.env.INPUT_REGION || 'eu-west-1'
-
-const secretName = process.env.INPUT_SECRET_NAME
-const releaseTag = process.env.INPUT_RELEASE_TAG || (new Date() * 1000).toString()
+const secretName = process.env.INPUT_SECRET_NAME ?? process.env.SECRET_NAME
+const releaseTag = process.env.INPUT_RELEASE_TAG ?? process.env.RELEASE_TAG ?? (new Date() * 1000).toString()
 
 console.log('###############################################################')
 console.log('APP_SLUG ENV ~ ', appName)
@@ -46,8 +46,7 @@ const client = new SecretsManager(awsConfig)
 client.getSecretValue({ SecretId: secretName }, (err, data) => {
 	if (err) {
 		throw err
-	} else {
-		if ('SecretString' in data) {
+	} else if ('SecretString' in data) {
 			const secrets = JSON.parse(data.SecretString)
 			secrets.CURRENT_RELEASE = releaseTag
 
@@ -62,21 +61,19 @@ client.getSecretValue({ SecretId: secretName }, (err, data) => {
   aws:elasticbeanstalk:application:environment:
 ${ebFile}`
 
-			if (IS_GITHUB_ACTION) {
-				fs.writeFileSync('./.ebextensions/options.config', ebMap, function (err) {
-					if (err) {
-						throw err
-					} else {
-						console.log('###############################################################')
-						console.log('GITHUB_ACTION EB ~ ', appName)
-						console.log('###############################################################')
-					}
-				})
-			}
+			console.log(ebMap)
+
+			fs.writeFile('./.ebextensions/options.config', ebMap, function(err, data) {
+				if(err) throw err
+				console.log(data)
+			})
+			
+			console.log('###############################################################')
+			console.log('GITHUB_ACTION EB ~ ', appName)
+			console.log('###############################################################')
 		}
-	}
 })
 
-setTimeout(() => {}, 5000)
+setTimeout(() => { }, 5000)
 
 return 'done'
